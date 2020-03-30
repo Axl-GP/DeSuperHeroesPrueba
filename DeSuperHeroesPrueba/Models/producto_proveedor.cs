@@ -32,7 +32,7 @@ namespace DeSuperHeroesPrueba.Models
 
         public virtual proveedor proveedor { get; set; }
 
-        class mapear
+        public class mapear
         {
             public mapear(EntityTypeBuilder<producto_proveedor> mapeo)
             {

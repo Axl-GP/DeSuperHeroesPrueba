@@ -25,7 +25,7 @@ namespace DeSuperHeroesPrueba.Models
         public DateTime fecha { get; set; }
         public virtual Cliente Cliente { get; set; }
 
-        class mapear
+         public class mapear
         {
             public mapear(EntityTypeBuilder<Factura> mapeo)
             {

@@ -23,7 +23,7 @@ namespace DeSuperHeroesPrueba.Models
         [Required, EmailAddress]
         public string email { get; set; }
 
-         class mapear
+         public class mapear
         {
             public mapear(EntityTypeBuilder<stock> mapeo)
             {

@@ -17,20 +17,22 @@ namespace DeSuperHeroesPrueba.Models
         public string nombre { get; set; }
         [Required]
         public string RNC { get; set; }
-        [Required,Phone]
+        [Required, Phone]
         public string telefono { get; set; }
         [Required, EmailAddress]
         public string email { get; set; }
         [Required]
         public categoria categoria { get; set; }
-    }
-    public enum categoria { Premium, Regular }
 
-    class mapear
-    {
-        public mapear(EntityTypeBuilder<Cliente> mapeo)
+        
+
+        public class mapear
         {
-            mapeo.HasKey(x => x.ID);
+            public mapear(EntityTypeBuilder<Cliente> mapeo)
+            {
+                mapeo.HasKey(x => x.ID);
+            }
         }
     }
+    public enum categoria { Premium, Regular }
 }
