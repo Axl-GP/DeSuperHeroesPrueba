@@ -31,3 +31,4 @@ C:\Users\wmlgu\source\repos\DeSuperHeroesPrueba\DeSuperHeroesPrueba\obj\Debug\ne
 C:\Users\wmlgu\source\repos\DeSuperHeroesPrueba\DeSuperHeroesPrueba\obj\Debug\netcoreapp3.1\DeSuperHeroesPrueba.csproj.CopyComplete
 C:\Users\wmlgu\source\repos\DeSuperHeroesPrueba\DeSuperHeroesPrueba\obj\Debug\netcoreapp3.1\DeSuperHeroesPrueba.dll
 C:\Users\wmlgu\source\repos\DeSuperHeroesPrueba\DeSuperHeroesPrueba\obj\Debug\netcoreapp3.1\DeSuperHeroesPrueba.pdb
+C:\Users\wmlgu\source\repos\DeSuperHeroesPrueba\DeSuperHeroesPrueba\obj\Debug\netcoreapp3.1\DeSuperHeroesPrueba.csprojAssemblyReference.cache
