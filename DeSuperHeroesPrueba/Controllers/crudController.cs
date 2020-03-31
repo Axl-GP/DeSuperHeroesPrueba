@@ -57,6 +57,23 @@ namespace DeSuperHeroesPrueba.Controllers
           
         }
 
+        [HttpPut]
+        [Route("editar_cliente")]
+        public IActionResult editCliente([FromBody]Cliente _cliente)
+        {
+           
+            var editar = _servicioCliente.editCliente(_cliente);
+
+            if (editar)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         //apartado de metodos para el manejo de productos
 
         [HttpGet]

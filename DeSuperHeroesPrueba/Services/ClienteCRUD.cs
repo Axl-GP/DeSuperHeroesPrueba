@@ -34,5 +34,29 @@ namespace DeSuperHeroesPrueba.Services
                 return false;
             }
         }
+        public Boolean editCliente(Cliente _cliente)
+        {
+            try
+            {
+                var editar = _contexto.Cliente.Where(cliente=>cliente.ID==_cliente.ID).FirstOrDefault();
+                editar.nombre = _cliente.nombre;
+                editar.RNC = _cliente.RNC;
+                editar.telefono = _cliente.telefono;
+                editar.email = _cliente.email;
+                editar.categoria = _cliente.categoria;
+
+                _contexto.SaveChanges();
+
+                return true;
+            
+            }   
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
+
+
     }
 }
