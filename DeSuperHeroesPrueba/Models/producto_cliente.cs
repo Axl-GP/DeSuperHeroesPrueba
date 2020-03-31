@@ -32,7 +32,8 @@ namespace DeSuperHeroesPrueba.Models
                 mapeo.HasKey(x => new { x.idproducto, x.idcliente, x.idproducto_cliente });
                 mapeo.Property(x => x.cantidad).HasColumnName("cantidad");
                 mapeo.Property(x => x.fechaFactura).HasColumnName("fechaFactura");
-                mapeo.HasOne(x => new { x.cliente, x.producto });
+                mapeo.HasOne(x => x.producto);
+                mapeo.HasOne(x => x.cliente);
                 mapeo.ToTable("producto_cliente");
 
             }

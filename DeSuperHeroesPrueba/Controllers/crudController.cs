@@ -12,15 +12,20 @@ namespace DeSuperHeroesPrueba.Controllers
     [ApiController]
     public class crudController : ControllerBase
     {
+        //Definicion de variables para la lectura de los servicios
+         
         private readonly ClienteCRUD _servicioCliente;
         private readonly ProductoCRUD _servicioProducto;
         private readonly ProveedorCRUD _servicioProveedor;
-        public crudController(ClienteCRUD servicioCliente, ProductoCRUD servicioProducto)
+
+        public crudController(ClienteCRUD servicioCliente, ProductoCRUD servicioProducto, ProveedorCRUD servicioProveedor)
         {
             _servicioCliente = servicioCliente;
             _servicioProducto = servicioProducto;
-            //_servicioProveedor = servicioProveedor;
+            _servicioProveedor = servicioProveedor;
         }
+
+        //apartado de metodos para el manejo de clientes
         [HttpGet]
         [Route("Obtener_clientes")]
         public IActionResult getClientes()
@@ -29,6 +34,8 @@ namespace DeSuperHeroesPrueba.Controllers
             return Ok(resultado);
         }
 
+        //apartado de metodos para el manejo de productos
+
         [HttpGet]
         [Route("Obtener_productos")]
         public IActionResult getProductos()
@@ -36,5 +43,18 @@ namespace DeSuperHeroesPrueba.Controllers
             var resultado = _servicioProducto.Obtener();
             return Ok(resultado);
         }
+        //apartado de metodos para el manejo de productos
+        [HttpGet]
+        [Route("Obtener_proveedores")]
+        public IActionResult getProveedores()
+        {
+            var resultado = _servicioProveedor.Obtener();
+            return Ok(resultado);
+        }
     }
+
+   
+
+  
 }
+
