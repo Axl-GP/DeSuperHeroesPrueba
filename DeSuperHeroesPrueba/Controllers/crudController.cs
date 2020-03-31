@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DeSuperHeroesPrueba.Models;
 using DeSuperHeroesPrueba.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,28 @@ namespace DeSuperHeroesPrueba.Controllers
         {
             var resultado = _servicioCliente.Obtener();
             return Ok(resultado);
+        }
+
+        [HttpPost]
+        [Route("agregar_clientes")]
+        public IActionResult AddCliente([FromBody] Cliente _cliente)
+        {
+            try
+            {
+                var resultado = _servicioCliente.addCliente(_cliente);
+
+                if (resultado)
+                {
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.HelpLink);
+                return BadRequest();
+            }
+            return Ok();
+          
         }
 
         //apartado de metodos para el manejo de productos
