@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,20 +15,23 @@ namespace DeSuperHeroesPrueba.Models
         [Key]
         public int id { get; set; }
 
-        [Required, MinLength(3), MaxLength(40)]
+        
         public string nombre { get; set; }
-        [Required]
-        public string RNC { get; set; }
-        [Required]
-        public string telefono { get; set; }
-        [Required, EmailAddress]
-        public string email { get; set; }
-
+        
+        public int existencia { get; set; }
+      
+        public DateTime ultimaFecha { get; set; }
+        
+        
          public class mapear
         {
             public mapear(EntityTypeBuilder<stock> mapeo)
             {
                 mapeo.HasKey(x => x.id);
+                mapeo.Property(x => x.nombre).HasColumnName("tipoProducto");
+                mapeo.Property(x => x.existencia).HasColumnName("existencia");
+                mapeo.Property(x => x.ultimaFecha).HasColumnName("ultimaFecha");
+                mapeo.ToTable("stock");
             }
         }
 

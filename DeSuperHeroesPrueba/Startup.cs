@@ -31,6 +31,8 @@ namespace DeSuperHeroesPrueba
             services.AddControllers();
             services.AddDbContext<desuperheroesvipDBcontext>(opciones => opciones.UseSqlServer(Configuration.GetConnectionString("db")));
             services.AddTransient<ClienteCRUD, ClienteCRUD>();
+            services.AddTransient <ProductoCRUD, ProductoCRUD>();
+            services.AddTransient<ProveedorCRUD, ProveedorCRUD>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

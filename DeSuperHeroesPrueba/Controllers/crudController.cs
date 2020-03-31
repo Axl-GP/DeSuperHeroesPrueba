@@ -13,15 +13,27 @@ namespace DeSuperHeroesPrueba.Controllers
     public class crudController : ControllerBase
     {
         private readonly ClienteCRUD _servicioCliente;
-        public crudController(ClienteCRUD servicio)
+        private readonly ProductoCRUD _servicioProducto;
+        private readonly ProveedorCRUD _servicioProveedor;
+        public crudController(ClienteCRUD servicioCliente, ProductoCRUD servicioProducto)
         {
-            _servicioCliente = servicio;
+            _servicioCliente = servicioCliente;
+            _servicioProducto = servicioProducto;
+            //_servicioProveedor = servicioProveedor;
         }
         [HttpGet]
         [Route("Obtener_clientes")]
-        public IActionResult Obtener()
+        public IActionResult getClientes()
         {
             var resultado = _servicioCliente.Obtener();
+            return Ok(resultado);
+        }
+
+        [HttpGet]
+        [Route("Obtener_productos")]
+        public IActionResult getProductos()
+        {
+            var resultado = _servicioProducto.Obtener();
             return Ok(resultado);
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 
@@ -14,12 +15,13 @@ namespace DeSuperHeroesPrueba.Models
     {
         [Key]
         public int id { get; set; }
-        public int idStock { get; set; }
+
+        public int Stockid { get; set; }
         [Required, MinLength(3), MaxLength(40)]
         public string nombre { get; set; }
         [Required]
-        public double precio { get; set; }
-        public virtual stock Stock { get; set; }
+        public decimal precio { get; set; }
+        public stock Stock { get; set; }
 
 
         public class mapear
@@ -27,6 +29,11 @@ namespace DeSuperHeroesPrueba.Models
             public mapear(EntityTypeBuilder<producto> mapeo)
             {
                 mapeo.HasKey(x => x.id);
+                mapeo.Property(x => x.nombre).HasColumnName("nombre");
+                mapeo.Property(x => x.precio).HasColumnName("precio");
+                mapeo.HasOne(x => x.Stock);
+                mapeo.ToTable("producto");
+
             }
         }
     }

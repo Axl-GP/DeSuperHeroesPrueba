@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -37,6 +38,10 @@ namespace DeSuperHeroesPrueba.Models
             public mapear(EntityTypeBuilder<producto_proveedor> mapeo)
             {
                 mapeo.HasKey(x => new { x.idproducto, x.idproducto_proveedor, x.idproveedor });
+                mapeo.Property(x => x.cantidad).HasColumnName("cantidad");
+                mapeo.Property(x => x.fechaImporte).HasColumnName("fechaImporte");
+                mapeo.HasOne(x => new { x.proveedor, x.producto });
+                mapeo.ToTable("producto_proveedor");
             }
         }
     }

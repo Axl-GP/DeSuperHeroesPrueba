@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,14 +22,18 @@ namespace DeSuperHeroesPrueba.Models
     
         public DateTime fechaFactura { get; set; }
 
-        public virtual producto producto { get; set; }
-        public virtual Cliente cliente { get; set; }
+        public producto producto { get; set; }
+        public Cliente cliente { get; set; }
 
         public class mapear
         {
             public mapear(EntityTypeBuilder<producto_cliente> mapeo)
             {
                 mapeo.HasKey(x => new { x.idproducto, x.idcliente, x.idproducto_cliente });
+                mapeo.Property(x => x.cantidad).HasColumnName("cantidad");
+                mapeo.Property(x => x.fechaFactura).HasColumnName("fechaFactura");
+                mapeo.HasOne(x => new { x.cliente, x.producto });
+                mapeo.ToTable("producto_cliente");
 
             }
         }

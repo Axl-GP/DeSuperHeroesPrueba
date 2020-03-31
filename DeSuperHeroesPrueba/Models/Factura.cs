@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,7 +13,7 @@ namespace DeSuperHeroesPrueba.Models
     public class Factura
     {
         [Key]
-        public int id { get; set; }
+        public int idFactura { get; set; }
         
         public int idCliente { get; set; }
 
@@ -20,16 +21,22 @@ namespace DeSuperHeroesPrueba.Models
         public int cantidad { get; set; }
 
         [Required]
-        public double total { get; set; }
+        public decimal total { get; set; }
         [Required]
         public DateTime fecha { get; set; }
-        public virtual Cliente Cliente { get; set; }
+        public Cliente cliente { get; set; }
 
          public class mapear
         {
             public mapear(EntityTypeBuilder<Factura> mapeo)
             {
-                mapeo.HasKey(x => x.id);
+                mapeo.HasKey(x => x.idFactura);
+                mapeo.Property(x => x.fecha).HasColumnName("fecha");
+                mapeo.Property(x => x.cantidad).HasColumnName("canidad");
+                mapeo.Property(x => x.total).HasColumnName("total");
+                mapeo.HasOne(x => x.cliente);
+                mapeo.ToTable("factura");
+
             }
         }
     }
