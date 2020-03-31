@@ -74,6 +74,22 @@ namespace DeSuperHeroesPrueba.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("eliminar_cliente/{id}")]
+        public IActionResult deleteCliente(int id)
+        {
+
+            var eliminar = _servicioCliente.DeleteCliente(id);
+
+            if (eliminar)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
         //apartado de metodos para el manejo de productos
 
         [HttpGet]

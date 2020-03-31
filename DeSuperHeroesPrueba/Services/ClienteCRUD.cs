@@ -57,6 +57,20 @@ namespace DeSuperHeroesPrueba.Services
             }
         }
 
-
+        public Boolean DeleteCliente(int idcliente)
+        {
+            try
+            {
+                var eliminar = _contexto.Cliente.Where(cliente => cliente.ID == idcliente).FirstOrDefault();
+                _contexto.Remove(eliminar);
+                _contexto.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
     }
 }
