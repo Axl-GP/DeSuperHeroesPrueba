@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DeSuperHeroesPrueba.Models;
+using DeSuperHeroesPrueba.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,7 @@ namespace DeSuperHeroesPrueba
         {
             services.AddControllers();
             services.AddDbContext<desuperheroesvipDBcontext>(opciones => opciones.UseSqlServer(Configuration.GetConnectionString("db")));
+            services.AddTransient<ClienteCRUD, ClienteCRUD>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

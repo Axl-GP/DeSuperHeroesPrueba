@@ -22,7 +22,7 @@ namespace DeSuperHeroesPrueba.Models
         [Required, EmailAddress]
         public string email { get; set; }
         [Required]
-        public categoria categoria { get; set; }
+        public string categoria { get; set; }
 
         
 
@@ -34,5 +34,5 @@ namespace DeSuperHeroesPrueba.Models
             }
         }
     }
-    public enum categoria { Premium, Regular }
+    
 }
