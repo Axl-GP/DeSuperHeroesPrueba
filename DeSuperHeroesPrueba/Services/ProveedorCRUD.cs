@@ -19,6 +19,11 @@ namespace DeSuperHeroesPrueba.Services
             var proveedor = _contexto.proveedor.ToList();
             return proveedor;
         }
+        public proveedor Obtener(int id)
+        {
+            var proveedor = _contexto.proveedor.Where(x=>x.id==id).FirstOrDefault();
+            return proveedor;
+        }
         public Boolean AddProveedor(proveedor _proveedor)
         {
             try
