@@ -19,6 +19,13 @@ namespace DeSuperHeroesPrueba.Services
             var resultado = _contexto.Cliente.ToList();
             return resultado;
         }
+        public Cliente Obtener(int id)
+        {
+            var resultado = _contexto.Cliente.Where(x=>x.ID==id).FirstOrDefault();
+            return resultado;
+        }
+        
+
         public Boolean addCliente(Cliente _cliente)
         {
             try
