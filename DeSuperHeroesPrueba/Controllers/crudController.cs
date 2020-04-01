@@ -99,21 +99,7 @@ namespace DeSuperHeroesPrueba.Controllers
             var resultado = _servicioProducto.Obtener();
             return Ok(resultado);
         }
-        [HttpGet]
-        [Route("Obtener_productos/{id}")]
-        public IActionResult getProductos(int id)
-        {
-            var resultado = _servicioProducto.ObtenerID(id);
-            return Ok(resultado);
-        }
-
-        [HttpGet]
-        [Route("Obtener_productos.Nombre/{nombre}")]
-        public IActionResult getProductos(string nombre)
-        {
-            var resultado = _servicioProducto.ObtenerNombre(nombre);
-            return Ok(resultado);
-        }
+       
 
 
         [HttpPost]
@@ -155,13 +141,7 @@ namespace DeSuperHeroesPrueba.Controllers
             return Ok(resultado);
         }
 
-        [HttpGet]
-        [Route("Obtener_proveedores/{id}")]
-        public IActionResult getProveedores(int id)
-        {
-            var resultado = _servicioProducto.ObtenerID(id);
-            return Ok(resultado);
-        }
+        
 
      
         [HttpPost]
