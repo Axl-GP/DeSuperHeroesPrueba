@@ -59,6 +59,15 @@ namespace DeSuperHeroesPrueba.Controllers
             return Ok(resultado);
 
         }
+        [HttpGet]
+        [Route("Obtener_clientes_categoria/{categoria}")]
+        public IActionResult getClientesByCategoria(string categoria)
+        {
+            var resultado = _servicioCliente.ObtenerCategoria(categoria);
+
+            return Ok(resultado);
+
+        }
         //Busquedas de proveedor
 
         [HttpGet]

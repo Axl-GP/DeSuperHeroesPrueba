@@ -24,12 +24,16 @@ namespace DeSuperHeroesPrueba.Services
             var resultado = _contexto.Cliente.Where(x=>x.ID==id).FirstOrDefault();
             return resultado;
         }
-        public Cliente Obtener(string nombre)
+        public List<Cliente> Obtener(string nombre)
         {
-            var resultado = _contexto.Cliente.Where(x => x.nombre == nombre).FirstOrDefault();
+            var resultado = _contexto.Cliente.Where(x => x.nombre == nombre).ToList();
             return resultado;
         }
-
+        public List<Cliente> ObtenerCategoria(string categoria)
+        {
+            var resultado = _contexto.Cliente.Where(x => x.categoria == categoria).ToList();
+            return resultado;
+        }
         public Boolean addCliente(Cliente _cliente)
         {
             try
