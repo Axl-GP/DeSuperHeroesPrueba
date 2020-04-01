@@ -121,5 +121,15 @@ namespace DeSuperHeroesPrueba.Controllers
 
             return Ok(resultado);
         }
+
+        [HttpGet]
+        [Route("Obtener_entrada_nombre/{nombre}")]
+
+        public IActionResult getEntradasNombre(string nombre)
+        {
+            var resultado = _servicioEntradas.obtenerEntrada(nombre);
+
+            return Ok(resultado);
+        }
     }
 }
