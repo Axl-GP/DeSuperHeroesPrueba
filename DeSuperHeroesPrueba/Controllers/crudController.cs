@@ -137,7 +137,23 @@ namespace DeSuperHeroesPrueba.Controllers
             }
             return BadRequest();
         }
+        [HttpDelete]
+        [Route("eliminar_proveedores/{idProveedor}")]
 
+        public IActionResult deleteProveedores(int idProveedor)
+        {
+
+            var resultado = _servicioProveedor.DeleteProveedor(idProveedor);
+
+            if (resultado)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 
 

@@ -57,7 +57,21 @@ namespace DeSuperHeroesPrueba.Services
             }
         }
 
-      
+        public Boolean DeleteProveedor(int idproveedor)
+        {
+            try
+            {
+                var eliminar = _contexto.proveedor.Where(proveedor => proveedor.id == idproveedor).FirstOrDefault();
+                _contexto.Remove(eliminar);
+                _contexto.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
 
     }
 }
