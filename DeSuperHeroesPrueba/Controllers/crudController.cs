@@ -107,10 +107,26 @@ namespace DeSuperHeroesPrueba.Controllers
             var resultado = _servicioProveedor.Obtener();
             return Ok(resultado);
         }
+   
+    [HttpPost]
+    [Route("agregar_proveedores")]
+    public IActionResult addProveedor([FromBody] proveedor proveedor)
+    {
+            var resultado = _servicioProveedor.AddProveedor(proveedor);
+
+            if (resultado)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
     }
 
-   
+    }
 
-  
+
 }
 
