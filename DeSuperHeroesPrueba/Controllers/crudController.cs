@@ -99,6 +99,14 @@ namespace DeSuperHeroesPrueba.Controllers
             var resultado = _servicioProducto.Obtener();
             return Ok(resultado);
         }
+        [HttpGet]
+        [Route("Obtener_productos/{id}")]
+        public IActionResult getProductosID(int id)
+        {
+            var resultado = _servicioProducto.ObtenerID(id);
+            return Ok(resultado);
+        }
+
 
         [HttpPost]
         [Route("agregar_productos")]

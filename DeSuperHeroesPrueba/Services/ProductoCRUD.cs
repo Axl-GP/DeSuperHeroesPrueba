@@ -20,6 +20,22 @@ namespace DeSuperHeroesPrueba.Services
             var productos = _contexto.producto.Include(x=>x.Stock).ToList();
             return productos;
         }
+        public producto ObtenerID(int id)
+        {
+            try
+            {
+                var productos = _contexto.producto.Include(x => x.Stock).Where(x => x.id == id).FirstOrDefault();
+                
+                return productos;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return null;
+            }
+                
+        
+            }
         public Boolean AddProducto(producto _producto)
         {
             try
