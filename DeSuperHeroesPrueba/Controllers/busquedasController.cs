@@ -123,11 +123,11 @@ namespace DeSuperHeroesPrueba.Controllers
         }
 
         [HttpGet]
-        [Route("Obtener_entrada_nombre/{nombre}")]
+        [Route("Obtener_entrada_nombre/{proveedor}")]
 
-        public IActionResult getEntradasNombre(string nombre)
+        public IActionResult getEntradasNombre(string proveedor)
         {
-            var resultado = _servicioEntradas.obtenerEntrada(nombre);
+            var resultado = _servicioEntradas.obtenerEntrada(proveedor);
 
             return Ok(resultado);
         }

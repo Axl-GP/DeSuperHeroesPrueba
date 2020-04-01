@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace DeSuperHeroesPrueba.Services
 {
-    public class entradas
+    public class facturaciones
     {
         private readonly desuperheroesvipDBcontext _contexto;
 
-        public entradas(desuperheroesvipDBcontext context)
+        public facturaciones(desuperheroesvipDBcontext context)
         {
             _contexto = context;
         }
 
-        public List<producto_proveedor> obtenerEntrada()
+
+        public List<producto_cliente> obtenerFacturacion()
         {
-            var resultado = _contexto.producto_proveedor.Include(x=>x.proveedor).Include(y=>y.producto).ThenInclude(y=>y.Stock).ToList();
+            var resultado = _contexto.producto_cliente.Include(x => x.cliente).Include(y => y.producto).ThenInclude(y => y.Stock).ToList();
 
             return resultado;
 
@@ -26,10 +27,10 @@ namespace DeSuperHeroesPrueba.Services
 
         public List<producto_proveedor> obtenerEntrada(DateTime fecha)
         {
-                var resultado = _contexto.producto_proveedor.Include(x => x.proveedor).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.fechaImporte == fecha).ToList();
+            var resultado = _contexto.producto_proveedor.Include(x => x.proveedor).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.fechaImporte == fecha).ToList();
 
-                    return resultado;
-         
+            return resultado;
+
         }
         public List<producto_proveedor> obtenerEntrada(string proveedor)
         {
@@ -38,6 +39,5 @@ namespace DeSuperHeroesPrueba.Services
             return resultado;
 
         }
-
     }
 }
