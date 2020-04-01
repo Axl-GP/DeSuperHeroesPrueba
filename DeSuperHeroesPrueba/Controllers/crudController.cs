@@ -101,9 +101,17 @@ namespace DeSuperHeroesPrueba.Controllers
         }
         [HttpGet]
         [Route("Obtener_productos/{id}")]
-        public IActionResult getProductosID(int id)
+        public IActionResult getProductos(int id)
         {
             var resultado = _servicioProducto.ObtenerID(id);
+            return Ok(resultado);
+        }
+
+        [HttpGet]
+        [Route("Obtener_productos.Nombre/{nombre}")]
+        public IActionResult getProductos(string nombre)
+        {
+            var resultado = _servicioProducto.ObtenerNombre(nombre);
             return Ok(resultado);
         }
 

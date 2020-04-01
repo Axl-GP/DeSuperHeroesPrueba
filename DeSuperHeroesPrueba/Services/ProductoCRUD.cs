@@ -25,7 +25,7 @@ namespace DeSuperHeroesPrueba.Services
             try
             {
                 var productos = _contexto.producto.Include(x => x.Stock).Where(x => x.id == id).FirstOrDefault();
-                
+
                 return productos;
             }
             catch (Exception ex)
@@ -33,8 +33,21 @@ namespace DeSuperHeroesPrueba.Services
                 Console.WriteLine(ex.StackTrace);
                 return null;
             }
-                
-        
+        }
+        public producto ObtenerNombre(string nombre)
+            {
+                try
+                {
+                    var productos = _contexto.producto.Include(x => x.Stock).Where(x => x.nombre == nombre).FirstOrDefault();
+
+                    return productos;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                    return null;
+                }
+
             }
         public Boolean AddProducto(producto _producto)
         {
