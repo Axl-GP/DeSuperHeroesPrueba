@@ -61,5 +61,14 @@ namespace DeSuperHeroesPrueba.Controllers
                 return Ok(resultado);
            
         }
+        [HttpGet]
+        [Route("Obtener_proveedores_email/{email}")]
+        public IActionResult getProveedoresbyEmail(string email)
+        {
+            var resultado = _servicioProveedor.Obtener(email);
+
+            return Ok(resultado);
+
+        }
     }
 }

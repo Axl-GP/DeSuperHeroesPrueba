@@ -29,6 +29,11 @@ namespace DeSuperHeroesPrueba.Services
             var proveedor = _contexto.proveedor.Where(x => x.nombre == nombre).FirstOrDefault();
             return proveedor;
         }
+        public proveedor ObtenerEmail(string email)
+        {
+            var proveedor = _contexto.proveedor.Where(x => x.email == email).FirstOrDefault();
+            return proveedor;
+        }
         public Boolean AddProveedor(proveedor _proveedor)
         {
             try
