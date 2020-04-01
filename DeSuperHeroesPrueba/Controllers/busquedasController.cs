@@ -52,5 +52,14 @@ namespace DeSuperHeroesPrueba.Controllers
             var resultado = _servicioProveedor.Obtener(id);
             return Ok(resultado);
         }
+        [HttpGet]
+        [Route("Obtener_proveedores_nombre/{nombre}")]
+        public IActionResult getProveedores(string nombre)
+        {
+            var resultado = _servicioProveedor.Obtener(nombre);
+
+                return Ok(resultado);
+           
+        }
     }
 }
