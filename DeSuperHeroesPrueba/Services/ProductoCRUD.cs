@@ -35,5 +35,20 @@ namespace DeSuperHeroesPrueba.Services
                 return false;
             }
         }
+        public Boolean Deleteproducto(int idproducto)
+        {
+            try
+            {
+                var eliminar = _contexto.producto.Where(producto => producto.id == idproducto).FirstOrDefault();
+                _contexto.Remove(eliminar);
+                _contexto.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
     }
 }

@@ -114,6 +114,22 @@ namespace DeSuperHeroesPrueba.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpDelete]
+        [Route("eliminar_productos/{productoid}")]
+
+        public IActionResult deleteProductos(int productoid)
+        {
+            var resultado = _servicioProducto.Deleteproducto(productoid);
+            if (resultado)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
         //apartado de metodos para el manejo de proveedores
         [HttpGet]
         [Route("Obtener_proveedores")]
