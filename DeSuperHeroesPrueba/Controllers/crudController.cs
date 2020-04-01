@@ -99,7 +99,7 @@ namespace DeSuperHeroesPrueba.Controllers
             var resultado = _servicioProducto.Obtener();
             return Ok(resultado);
         }
-        //apartado de metodos para el manejo de productos
+        //apartado de metodos para el manejo de proveedores
         [HttpGet]
         [Route("Obtener_proveedores")]
         public IActionResult getProveedores()
@@ -124,6 +124,19 @@ namespace DeSuperHeroesPrueba.Controllers
             }
             
     }
+
+        [HttpPut]
+        [Route("editar_proveedores")]
+
+        public IActionResult editProveedores([FromBody] proveedor _proveedor)
+        {
+            var resultado = _servicioProveedor.editProveedor(_proveedor);
+            if (resultado)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
 
     }
 

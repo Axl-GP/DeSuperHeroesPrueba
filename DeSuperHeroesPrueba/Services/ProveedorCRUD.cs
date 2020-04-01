@@ -34,6 +34,30 @@ namespace DeSuperHeroesPrueba.Services
                 return false;
             }
         }
+        public Boolean editProveedor(proveedor _proveedor)
+        {
+            try
+            {
+                var editar = _contexto.proveedor.Where(proveedor => proveedor.id == _proveedor.id).FirstOrDefault();
+                editar.nombre = _proveedor.nombre;
+                editar.RNC = _proveedor.RNC;
+                editar.telefono = _proveedor.telefono;
+                editar.email = _proveedor.email;
+               
+
+                _contexto.SaveChanges();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return false;
+            }
+        }
+
+      
 
     }
 }
