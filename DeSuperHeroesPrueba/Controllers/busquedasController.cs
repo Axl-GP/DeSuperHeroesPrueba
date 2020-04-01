@@ -49,6 +49,16 @@ namespace DeSuperHeroesPrueba.Controllers
             var resultado = _servicioCliente.Obtener(id);
             return Ok(resultado);
         }
+
+        [HttpGet]
+        [Route("Obtener_clientes_nombre/{nombre}")]
+        public IActionResult getClientes(string nombre)
+        {
+            var resultado = _servicioCliente.Obtener(nombre);
+
+            return Ok(resultado);
+
+        }
         //Busquedas de proveedor
 
         [HttpGet]

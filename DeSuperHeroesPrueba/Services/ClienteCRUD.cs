@@ -24,7 +24,11 @@ namespace DeSuperHeroesPrueba.Services
             var resultado = _contexto.Cliente.Where(x=>x.ID==id).FirstOrDefault();
             return resultado;
         }
-        
+        public Cliente Obtener(string nombre)
+        {
+            var resultado = _contexto.Cliente.Where(x => x.nombre == nombre).FirstOrDefault();
+            return resultado;
+        }
 
         public Boolean addCliente(Cliente _cliente)
         {
