@@ -16,12 +16,15 @@ namespace DeSuperHeroesPrueba.Controllers
         private readonly ClienteCRUD _servicioCliente;
         private readonly ProductoCRUD _servicioProducto;
         private readonly ProveedorCRUD _servicioProveedor;
+        private readonly entradas _servicioEntradas;
 
-        public busquedasController(ClienteCRUD servicioCliente, ProductoCRUD servicioProducto, ProveedorCRUD servicioProveedor)
+        public busquedasController(ClienteCRUD servicioCliente, entradas servicioEntradas, ProductoCRUD servicioProducto, ProveedorCRUD servicioProveedor)
         {
             _servicioCliente = servicioCliente;
             _servicioProducto = servicioProducto;
             _servicioProveedor = servicioProveedor;
+            _servicioEntradas = servicioEntradas;
+
         }
         //Busquedas de productos
         [HttpGet]
@@ -92,8 +95,31 @@ namespace DeSuperHeroesPrueba.Controllers
         {
             var resultado = _servicioProveedor.Obtener(email);
 
+
             return Ok(resultado);
 
+        }
+
+        //Obtener Entradas
+
+        [HttpGet]
+        [Route("Obtener_entrada/")]
+
+        public IActionResult getEntradas()
+        {
+            var resultado = _servicioEntradas.obtenerEntrada();
+
+            return Ok(resultado);
+        }
+
+        [HttpGet]
+        [Route("Obtener_entrada_fecha/{fecha}")]
+
+        public IActionResult getEntradas(DateTime fecha)
+        {
+            var resultado = _servicioEntradas.obtenerEntrada(fecha);
+
+            return Ok(resultado);
         }
     }
 }

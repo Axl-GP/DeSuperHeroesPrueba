@@ -13,15 +13,15 @@ namespace DeSuperHeroesPrueba.Models
     public class producto_proveedor
     {
         [Key]
-        public int idproducto_proveedor { get; set; }
+        public int producto_proveedorid { get; set; }
 
      
 
-        public int idproducto { get; set; }
+        public int productoid { get; set; }
 
       
 
-        public int idproveedor { get; set; }
+        public int proveedorid { get; set; }
 
         [Required]
         public int cantidad { get; set;
@@ -37,7 +37,7 @@ namespace DeSuperHeroesPrueba.Models
         {
             public mapear(EntityTypeBuilder<producto_proveedor> mapeo)
             {
-                mapeo.HasKey(x => new { x.idproducto, x.idproducto_proveedor, x.idproveedor });
+                mapeo.HasKey(x => new { x.productoid, x.producto_proveedorid, x.proveedorid });
                 mapeo.Property(x => x.cantidad).HasColumnName("cantidad");
                 mapeo.Property(x => x.fechaImporte).HasColumnName("fechaImporte");
                 mapeo.HasOne(x => x.producto);
