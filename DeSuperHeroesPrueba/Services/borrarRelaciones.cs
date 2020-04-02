@@ -94,5 +94,38 @@ namespace DeSuperHeroesPrueba.Services
             }
         }
 
+        //En este metodo se borran los registros de las tablas dependientes de proveedor
+        public Boolean borrarProveedor(int id)
+        {
+            try
+            {
+
+                var entradas = _contexto.producto_proveedor.Where(x => x.proveedorid == id).ToList();
+                //var seleccionado = entradas.Find(x => x.proveedorid == id);
+
+                if (entradas != null)
+                {
+                    foreach (producto_proveedor entrada in entradas)
+                    {
+                        _contexto.producto_proveedor.Remove(entrada);
+                        _contexto.SaveChanges();
+                    }
+
+                    
+
+
+                    return true;
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
     }
 }
