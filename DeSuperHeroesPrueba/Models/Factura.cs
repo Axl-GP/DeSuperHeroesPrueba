@@ -13,9 +13,9 @@ namespace DeSuperHeroesPrueba.Models
     public class Factura
     {
         [Key]
-        public int idFactura { get; set; }
+        public int Facturaid { get; set; }
         
-        public int idCliente { get; set; }
+        public int Clienteid { get; set; }
 
         [Required, Range(1,50)]
         public int cantidad { get; set; }
@@ -30,9 +30,9 @@ namespace DeSuperHeroesPrueba.Models
         {
             public mapear(EntityTypeBuilder<Factura> mapeo)
             {
-                mapeo.HasKey(x => x.idFactura);
+                mapeo.HasKey(x => x.Facturaid);
                 mapeo.Property(x => x.fecha).HasColumnName("fecha");
-                mapeo.Property(x => x.cantidad).HasColumnName("canidad");
+                mapeo.Property(x => x.cantidad).HasColumnName("cantidad");
                 mapeo.Property(x => x.total).HasColumnName("total");
                 mapeo.HasOne(x => x.cliente);
                 mapeo.ToTable("factura");

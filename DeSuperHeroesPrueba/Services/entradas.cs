@@ -24,6 +24,13 @@ namespace DeSuperHeroesPrueba.Services
 
         }
 
+        public producto_proveedor obtenerEntrada(int id)
+        {
+            var resultado = _contexto.producto_proveedor.Include(x => x.proveedor).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x=>x.producto_proveedorid==id).FirstOrDefault();
+
+            return resultado;
+
+        }
         public List<producto_proveedor> obtenerEntrada(DateTime fecha)
         {
                 var resultado = _contexto.producto_proveedor.Include(x => x.proveedor).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.fechaImporte == fecha).ToList();
@@ -34,6 +41,13 @@ namespace DeSuperHeroesPrueba.Services
         public List<producto_proveedor> obtenerEntrada(string proveedor)
         {
             var resultado = _contexto.producto_proveedor.Include(x => x.proveedor).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.proveedor.nombre == proveedor).ToList();
+
+            return resultado;
+
+        }
+        public List<producto_proveedor> obtenerEntradaProducto(string nombre)
+        {
+            var resultado = _contexto.producto_proveedor.Include(x => x.proveedor).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.producto.nombre == nombre).ToList();
 
             return resultado;
 

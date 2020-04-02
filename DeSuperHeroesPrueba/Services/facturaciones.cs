@@ -17,24 +17,31 @@ namespace DeSuperHeroesPrueba.Services
         }
 
 
-        public List<producto_cliente> obtenerFacturacion()
+        public List<Factura> obtenerFacturacion()
         {
-            var resultado = _contexto.producto_cliente.Include(x => x.cliente).Include(y => y.producto).ThenInclude(y => y.Stock).ToList();
+            var resultado = _contexto.factura.Include(x => x.cliente).ToList();
+
+            return resultado;
+
+        }
+        public Factura obtenerFacturacion(int id)
+        {
+            var resultado = _contexto.factura.Include(x => x.cliente).Where(x=>x.Facturaid==id).FirstOrDefault();
 
             return resultado;
 
         }
 
-        public List<producto_proveedor> obtenerEntrada(DateTime fecha)
+        public List<producto_cliente> obtenerFacturacion(DateTime fecha)
         {
-            var resultado = _contexto.producto_proveedor.Include(x => x.proveedor).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.fechaImporte == fecha).ToList();
+            var resultado = _contexto.producto_cliente.Include(x => x.cliente).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.fechaFactura == fecha).ToList();
 
             return resultado;
 
         }
-        public List<producto_proveedor> obtenerEntrada(string proveedor)
+        public List<producto_cliente> obtenerFacturacion(string cliente)
         {
-            var resultado = _contexto.producto_proveedor.Include(x => x.proveedor).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.proveedor.nombre == proveedor).ToList();
+            var resultado = _contexto.producto_cliente.Include(x => x.cliente).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.cliente.nombre == cliente).ToList();
 
             return resultado;
 

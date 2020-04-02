@@ -34,6 +34,7 @@ namespace DeSuperHeroesPrueba
             services.AddTransient <ProductoCRUD, ProductoCRUD>();
             services.AddTransient<ProveedorCRUD, ProveedorCRUD>();
             services.AddTransient<entradas, entradas>();
+            services.AddTransient<facturaciones, facturaciones>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

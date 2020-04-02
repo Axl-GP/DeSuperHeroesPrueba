@@ -17,13 +17,15 @@ namespace DeSuperHeroesPrueba.Controllers
         private readonly ProductoCRUD _servicioProducto;
         private readonly ProveedorCRUD _servicioProveedor;
         private readonly entradas _servicioEntradas;
+        private readonly facturaciones _servicioFacturacion;
 
-        public busquedasController(ClienteCRUD servicioCliente, entradas servicioEntradas, ProductoCRUD servicioProducto, ProveedorCRUD servicioProveedor)
+        public busquedasController(ClienteCRUD servicioCliente,facturaciones servicioFacturacion, entradas servicioEntradas, ProductoCRUD servicioProducto, ProveedorCRUD servicioProveedor)
         {
             _servicioCliente = servicioCliente;
             _servicioProducto = servicioProducto;
             _servicioProveedor = servicioProveedor;
             _servicioEntradas = servicioEntradas;
+            _servicioFacturacion = servicioFacturacion;
 
         }
         //Busquedas de productos
@@ -111,7 +113,15 @@ namespace DeSuperHeroesPrueba.Controllers
 
             return Ok(resultado);
         }
+        [HttpGet]
+        [Route("Obtener_entrada/{id}")]
 
+        public IActionResult getEntradas(int id)
+        {
+            var resultado = _servicioEntradas.obtenerEntrada(id);
+
+            return Ok(resultado);
+        }
         [HttpGet]
         [Route("Obtener_entrada_fecha/{fecha}")]
 
@@ -123,11 +133,61 @@ namespace DeSuperHeroesPrueba.Controllers
         }
 
         [HttpGet]
-        [Route("Obtener_entrada_nombre/{proveedor}")]
+        [Route("Obtener_entrada_proveedor/{proveedor}")]
 
         public IActionResult getEntradasNombre(string proveedor)
         {
             var resultado = _servicioEntradas.obtenerEntrada(proveedor);
+
+            return Ok(resultado);
+        }
+
+        [HttpGet]
+        [Route("Obtener_entrada_producto/{producto}")]
+
+        public IActionResult getEntradas(string producto)
+        {
+            var resultado = _servicioEntradas.obtenerEntradaProducto(producto);
+
+            return Ok(resultado);
+        }
+
+        //Obtener facturaciones
+
+        [HttpGet]
+        [Route("Obtener_facturacion/")]
+
+        public IActionResult getFacturacion()
+        {
+            var resultado = _servicioFacturacion.obtenerFacturacion();
+
+            return Ok(resultado);
+        }
+        [HttpGet]
+        [Route("Obtener_facturacion/{id}")]
+
+        public IActionResult getFacturacion(int id)
+        {
+            var resultado = _servicioFacturacion.obtenerFacturacion(id);
+
+            return Ok(resultado);
+        }
+        [HttpGet]
+        [Route("Obtener_facturacion_fecha/{fecha}")]
+
+        public IActionResult getFacturacion(DateTime fecha)
+        {
+            var resultado = _servicioFacturacion.obtenerFacturacion(fecha);
+
+            return Ok(resultado);
+        }
+
+        [HttpGet]
+        [Route("Obtener_facturacion_cliente/{cliente}")]
+
+        public IActionResult getFacturacionNombre(string cliente)
+        {
+            var resultado = _servicioFacturacion.obtenerFacturacion(cliente);
 
             return Ok(resultado);
         }
