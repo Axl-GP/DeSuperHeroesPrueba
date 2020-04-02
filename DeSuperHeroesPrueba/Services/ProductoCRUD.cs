@@ -10,10 +10,12 @@ namespace DeSuperHeroesPrueba.Services
     public class ProductoCRUD
     {
         private readonly desuperheroesvipDBcontext _contexto;
+        private readonly borrarRelaciones _borrado;
 
-        public ProductoCRUD(desuperheroesvipDBcontext context)
+        public ProductoCRUD(desuperheroesvipDBcontext context, borrarRelaciones borrado)
         {
             _contexto = context;
+            _borrado = borrado;
         }
         public List<producto> Obtener()
         {
@@ -68,6 +70,7 @@ namespace DeSuperHeroesPrueba.Services
         {
             try
             {
+                _borrado.borrarProducto(idproducto);
                 var eliminar = _contexto.producto.Where(producto => producto.id == idproducto).FirstOrDefault();
                 _contexto.Remove(eliminar);
                 _contexto.SaveChanges();

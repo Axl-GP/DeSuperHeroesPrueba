@@ -83,7 +83,7 @@ namespace DeSuperHeroesPrueba.Services
 
             try
             {
-                _clase.DeleteRelaciones(idcliente);
+                _clase.borrarCliente(idcliente);
                 var eliminar = _contexto.Cliente.Where(cliente => cliente.ID == idcliente).FirstOrDefault();
                 _contexto.Remove(eliminar);
                 _contexto.SaveChanges();
@@ -99,48 +99,5 @@ namespace DeSuperHeroesPrueba.Services
         
     }
 
-    public class borrarRelaciones
-    {
-        private readonly desuperheroesvipDBcontext _contexto;
-
-        public borrarRelaciones(desuperheroesvipDBcontext context)
-        {
-            _contexto = context;
-        }
-
-        public Boolean DeleteRelaciones(int id)
-        {
-            try
-            {
-                var facturas = _contexto.factura.Where(x => x.Clienteid == id).ToList();
-                var compras = _contexto.producto_cliente.Where(x => x.clienteid == id).ToList();
-                if (facturas!=null && compras!=null)
-                {
-                    foreach (Factura factura in facturas)
-                    {
-                        _contexto.factura.Remove(factura);
-                        _contexto.SaveChanges();
-                    }
-
-                    foreach (producto_cliente compra in compras)
-                    {
-                        _contexto.Remove(compra);
-                        _contexto.SaveChanges();
-                    }
-
-                   
-                    return true;
-                }
-                
-                return true;
-                
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-        }
-
-    }
+    
 }
