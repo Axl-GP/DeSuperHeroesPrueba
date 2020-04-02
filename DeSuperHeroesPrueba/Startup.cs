@@ -31,6 +31,7 @@ namespace DeSuperHeroesPrueba
             services.AddControllers();
             services.AddDbContext<desuperheroesvipDBcontext>(opciones => opciones.UseSqlServer(Configuration.GetConnectionString("db")));
             services.AddTransient<ClienteCRUD, ClienteCRUD>();
+            services.AddTransient<borrarRelaciones, borrarRelaciones>();
             services.AddTransient <ProductoCRUD, ProductoCRUD>();
             services.AddTransient<ProveedorCRUD, ProveedorCRUD>();
             services.AddTransient<entradas, entradas>();

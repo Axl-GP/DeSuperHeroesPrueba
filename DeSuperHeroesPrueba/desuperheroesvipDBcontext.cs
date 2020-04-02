@@ -21,6 +21,7 @@ namespace DeSuperHeroesPrueba.Models
         protected override void OnModelCreating(ModelBuilder crear)
         {
             new Cliente.mapear(crear.Entity<Cliente>());
+            
             new stock.mapear(crear.Entity<stock>());
             new proveedor.mapear(crear.Entity<proveedor>());
             new producto.mapear(crear.Entity<producto>());

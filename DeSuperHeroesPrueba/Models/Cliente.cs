@@ -32,6 +32,7 @@ namespace DeSuperHeroesPrueba.Models
             public mapear(EntityTypeBuilder<Cliente> mapeo)
             {
                 mapeo.HasKey(x => x.ID);
+                
                 mapeo.Property(x => x.categoria).HasColumnName("categoria");
                 mapeo.Property(x => x.nombre).HasColumnName("nombre");
                 mapeo.Property(x => x.RNC).HasColumnName("RNC");
