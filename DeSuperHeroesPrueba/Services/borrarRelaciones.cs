@@ -1,4 +1,5 @@
 ﻿using DeSuperHeroesPrueba.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,15 +56,20 @@ namespace DeSuperHeroesPrueba.Services
         {
             try
             {
-                var entradas = _contexto.producto_proveedor.Where(x => x.productoid == id).ToList();
-                var total = entradas.Select(x => x.cantidad).Sum();
+                var entradas = _contexto.producto_proveedor.Include(x=>x.producto).Include(x=>x.proveedor).Where(x => x.productoid == id).ToList();
+                var seleccionado = entradas.Find(x => x.productoid == id);
+                int total = (entradas.Select(x => x.cantidad).Sum());
                 var compras = _contexto.producto_cliente.Where(x => x.productoid == id).ToList();
-                var stock = _contexto.stock.Where(x => x.id.Equals(_contexto.producto_proveedor.Where(x => x.productoid == id)));
+                
+                var stock = _contexto.stock.Where(x => x.id== seleccionado.producto.Stockid).First();
+                //.Equals(_contexto.producto_proveedor.Where(x => x.productoid == id))
                 if (entradas != null && compras != null && stock!=null)
                 {
                     foreach (producto_proveedor entrada in entradas)
                     {
-                        _contexto.stock.Sum(x=>x.existencia-total);
+                        stock.existencia -= total;
+                        stock.ultimaFecha = DateTime.Now;
+                        _contexto.Update(stock);
                         _contexto.producto_proveedor.Remove(entrada);
                         _contexto.SaveChanges();
                     }
