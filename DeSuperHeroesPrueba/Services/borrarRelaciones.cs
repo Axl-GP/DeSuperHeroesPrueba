@@ -56,11 +56,14 @@ namespace DeSuperHeroesPrueba.Services
             try
             {
                 var entradas = _contexto.producto_proveedor.Where(x => x.productoid == id).ToList();
+                var total = entradas.Select(x => x.cantidad).Sum();
                 var compras = _contexto.producto_cliente.Where(x => x.productoid == id).ToList();
-                if (entradas != null && compras != null)
+                var stock = _contexto.stock.Where(x => x.id.Equals(_contexto.producto_proveedor.Where(x => x.productoid == id)));
+                if (entradas != null && compras != null && stock!=null)
                 {
                     foreach (producto_proveedor entrada in entradas)
                     {
+                        _contexto.stock.Sum(x=>x.existencia-total);
                         _contexto.producto_proveedor.Remove(entrada);
                         _contexto.SaveChanges();
                     }
