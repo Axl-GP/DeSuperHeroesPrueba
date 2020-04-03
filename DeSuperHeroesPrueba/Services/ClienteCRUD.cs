@@ -1,4 +1,5 @@
 ﻿using DeSuperHeroesPrueba.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,8 @@ namespace DeSuperHeroesPrueba.Services
 
             //AQUI VA UN LINQ
             return resultado;
+            
+           
         }
         public Boolean addCliente(Cliente _cliente)
         {

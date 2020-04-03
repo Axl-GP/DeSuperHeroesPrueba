@@ -65,12 +65,38 @@ namespace DeSuperHeroesPrueba.Controllers
 
         }
         [HttpGet]
-        [Route("Obtener_clientes_categoria/{categoria}")]
-        public IActionResult getClientesByCategoria(string categoria)
+        [Route("Obtener_clientes_categoria/{categoria}&&{filtro}")]
+        public IActionResult getClientesByCategoria(string categoria, string filtro)
         {
             var resultado = _servicioCliente.ObtenerCategoria(categoria);
 
+            if (filtro.Equals("conteo"))
+            {
+              
+                return Ok(resultado.Count());
+
+            }
+            else if (filtro.Equals(""))
+            {
+                return Ok(resultado);
+            }
             return Ok(resultado);
+
+
+
+            
+
+        }
+
+        [HttpGet]
+        [Route("Obtener_conteo_categoria/{categoria}")]
+        public IActionResult getConteoByCategoria(string categoria)
+        {
+            var resultado = _servicioCliente.ObtenerCategoria(categoria);
+
+
+
+            return Ok(resultado.Count());
 
         }
         //Busquedas de proveedor
@@ -110,7 +136,7 @@ namespace DeSuperHeroesPrueba.Controllers
         public IActionResult getEntradas()
         {
             var resultado = _servicioEntradas.obtenerEntrada();
-
+            resultado.Count();
             return Ok(resultado);
         }
         [HttpGet]
@@ -119,7 +145,8 @@ namespace DeSuperHeroesPrueba.Controllers
         public IActionResult getEntradas(int id)
         {
             var resultado = _servicioEntradas.obtenerEntrada(id);
-
+            
+            
             return Ok(resultado);
         }
         [HttpGet]
@@ -128,9 +155,23 @@ namespace DeSuperHeroesPrueba.Controllers
         public IActionResult getEntradas(DateTime fecha)
         {
             var resultado = _servicioEntradas.obtenerEntrada(fecha);
+            
+            return Ok(resultado);
+            
+            
+        }
+        [HttpGet]
+        [Route("Obtener_entrada_fecha/{fecha}&&{filtro}")]
+
+        public IActionResult getEntradas(DateTime fecha, string filtro)
+        {
+            var resultado = _servicioEntradas.obtenerEntrada(fecha, filtro);
 
             return Ok(resultado);
+
+
         }
+
 
         [HttpGet]
         [Route("Obtener_entrada_proveedor/{proveedor}")]
@@ -140,6 +181,19 @@ namespace DeSuperHeroesPrueba.Controllers
             var resultado = _servicioEntradas.obtenerEntrada(proveedor);
 
             return Ok(resultado);
+
+        }
+
+        [HttpGet]
+        [Route("Obtener_entrada_proveedor/{proveedor}&&{filtro}")]
+
+        public IActionResult getEntradas(string proveedor, string filtro)
+        {
+            var resultado = _servicioEntradas.obtenerEntrada(proveedor, filtro);
+
+            return Ok(resultado);
+
+
         }
 
         [HttpGet]
@@ -151,6 +205,19 @@ namespace DeSuperHeroesPrueba.Controllers
 
             return Ok(resultado);
         }
+
+        [HttpGet]
+        [Route("Obtener_entrada_producto/{producto}&&{filtro}")]
+
+        public IActionResult getEntradasProducto(string producto, string filtro)
+        {
+            var resultado = _servicioEntradas.obtenerEntradaProducto(producto, filtro);
+
+            return Ok(resultado);
+
+
+        }
+
 
         //Obtener facturaciones
 
@@ -183,6 +250,18 @@ namespace DeSuperHeroesPrueba.Controllers
         }
 
         [HttpGet]
+        [Route("Obtener_facturacion_fecha/{fecha}&&{filtro}")]
+
+        public IActionResult getFacturacion(DateTime fecha, string filtro)
+        {
+            var resultado = _servicioFacturacion.obtenerFacturacion(fecha, filtro);
+
+            return Ok(resultado);
+
+
+        }
+
+        [HttpGet]
         [Route("Obtener_facturacion_cliente/{cliente}")]
 
         public IActionResult getFacturacionNombre(string cliente)
@@ -190,6 +269,18 @@ namespace DeSuperHeroesPrueba.Controllers
             var resultado = _servicioFacturacion.obtenerFacturacion(cliente);
 
             return Ok(resultado);
+        }
+
+        [HttpGet]
+        [Route("Obtener_facturacion_cliente/{cliente}&&{filtro}")]
+
+        public IActionResult getFacturacion(string cliente, string filtro)
+        {
+            var resultado = _servicioFacturacion.obtenerFacturacion(cliente, filtro);
+
+            return Ok(resultado);
+
+
         }
     }
 }

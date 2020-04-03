@@ -39,11 +39,61 @@ namespace DeSuperHeroesPrueba.Services
             return resultado;
 
         }
+        public decimal obtenerFacturacion(DateTime fecha, string filtro)
+        {
+            var resultado = _contexto.producto_cliente.Include(x => x.cliente).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.fechaFactura == fecha).ToList();
+
+            switch (filtro)
+            {
+                case "promedio":
+                    return resultado.Average(x => x.producto.precio);
+
+                case "conteo":
+                    return resultado.Count();
+
+                case "suma":
+                    return resultado.Sum(x => x.producto.precio);
+
+
+                default:
+
+                    return 0;
+            }
+
+
+
+        }
+
         public List<producto_cliente> obtenerFacturacion(string cliente)
         {
             var resultado = _contexto.producto_cliente.Include(x => x.cliente).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.cliente.nombre == cliente).ToList();
 
             return resultado;
+
+        }
+
+        public decimal obtenerFacturacion(string cliente, string filtro)
+        {
+            var resultado = _contexto.producto_cliente.Include(x => x.cliente).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.cliente.nombre == cliente).ToList();
+
+            switch (filtro)
+            {
+                case "promedio":
+                    return resultado.Average(x => x.producto.precio);
+
+                case "conteo":
+                    return resultado.Count();
+
+                case "suma":
+                    return resultado.Sum(x => x.producto.precio);
+
+
+                default:
+
+                    return 0;
+            }
+
+
 
         }
     }
