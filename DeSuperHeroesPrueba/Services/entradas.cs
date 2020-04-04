@@ -36,6 +36,14 @@ namespace DeSuperHeroesPrueba.Services
 
         }
 
+        public List<stock> obtenerStock()
+        {
+            var resultado = _contexto.stock.ToList();
+
+            return resultado;
+
+        }
+
         public Boolean AddEntrada(producto_proveedor importar)
         {
             try

@@ -284,5 +284,13 @@ namespace DeSuperHeroesPrueba.Controllers
 
 
         }
+        [HttpGet]
+        [Route("Obtener_stock")]
+        public IActionResult getStock()
+        {
+            var resultado = _servicioEntradas.obtenerStock();
+            return Ok(resultado);
+        }
+
     }
 }
