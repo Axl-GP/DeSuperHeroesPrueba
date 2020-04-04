@@ -36,7 +36,22 @@ namespace DeSuperHeroesPrueba.Services
 
         }
 
-      
+        public Boolean AddEntrada(producto_proveedor importar)
+        {
+            try
+            {
+                _contexto.producto_proveedor.Add(importar);
+                _contexto.SaveChanges();
+                return true;
+
+            }
+            catch (Exception error)
+            {
+                error.GetBaseException();
+                return false;
+            }
+        }
+
 
         public producto_proveedor obtenerEntrada(int id)
         {

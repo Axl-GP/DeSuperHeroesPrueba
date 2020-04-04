@@ -20,6 +20,7 @@ namespace DeSuperHeroesPrueba.Models
         [Required]
         public int cantidad { get; set; }
     
+        [Required]
         public DateTime fechaFactura { get; set; }
 
         public producto producto { get; set; }
@@ -34,6 +35,7 @@ namespace DeSuperHeroesPrueba.Models
                 mapeo.Property(x => x.fechaFactura).HasColumnName("fechaFactura");
                 mapeo.HasOne(x => x.producto);
                 mapeo.HasOne(x => x.cliente);
+                mapeo.Property(x => x.producto_clienteid).UseIdentityColumn();
                 mapeo.ToTable("producto_cliente");
 
             }

@@ -13,6 +13,8 @@ namespace DeSuperHeroesPrueba.Models
     public class producto_proveedor
     {
         [Key]
+        
+
         public int producto_proveedorid { get; set; }
 
      
@@ -29,9 +31,9 @@ namespace DeSuperHeroesPrueba.Models
         [Required]
         public DateTime fechaImporte { get; set; }
 
-        public virtual producto producto{get;set;}
+        public producto producto{get;set;}
 
-        public virtual proveedor proveedor { get; set; }
+        public proveedor proveedor { get; set; }
 
         public class mapear
         {
@@ -43,6 +45,7 @@ namespace DeSuperHeroesPrueba.Models
                 mapeo.HasOne(x => x.producto);
                 mapeo.HasOne(x => x.proveedor);
                 mapeo.ToTable("producto_proveedor");
+                mapeo.Property(x => x.producto_proveedorid).UseIdentityColumn();
             }
         }
     }

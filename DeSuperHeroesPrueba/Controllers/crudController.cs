@@ -18,12 +18,18 @@ namespace DeSuperHeroesPrueba.Controllers
         private readonly ClienteCRUD _servicioCliente;
         private readonly ProductoCRUD _servicioProducto;
         private readonly ProveedorCRUD _servicioProveedor;
+        private readonly facturaciones _servicioFactura;
+        private readonly entradas _servicioEntrada;
 
-        public crudController(ClienteCRUD servicioCliente, ProductoCRUD servicioProducto, ProveedorCRUD servicioProveedor)
+
+
+        public crudController(ClienteCRUD servicioCliente, ProductoCRUD servicioProducto, ProveedorCRUD servicioProveedor, facturaciones servicioFactura, entradas servicioEntrada)
         {
             _servicioCliente = servicioCliente;
             _servicioProducto = servicioProducto;
             _servicioProveedor = servicioProveedor;
+            _servicioEntrada = servicioEntrada;
+            _servicioFactura = servicioFactura;
         }
 
         //apartado de metodos para el manejo de clientes
@@ -190,6 +196,38 @@ namespace DeSuperHeroesPrueba.Controllers
                 return BadRequest();
             }
         }
+
+        //Agregar entradas y facturaciones
+        [HttpPost]
+        [Route("agregar_factura")]
+        public IActionResult addFactura([FromBody]producto_cliente _compra)
+        {
+            var resultado = _servicioFactura.Addfactura(_compra);
+            if (resultado)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route("agregar_entrada")]
+        public IActionResult addEntrada([FromBody]producto_proveedor _importar)
+        {
+            var resultado = _servicioEntrada.AddEntrada(_importar);
+            if (resultado)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
     }
 
 

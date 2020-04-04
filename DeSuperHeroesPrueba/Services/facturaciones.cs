@@ -16,6 +16,21 @@ namespace DeSuperHeroesPrueba.Services
             _contexto = context;
         }
 
+        public Boolean Addfactura(producto_cliente compra)
+        {
+            try
+            {
+                _contexto.producto_cliente.Add(compra);
+                _contexto.SaveChanges();
+                return true;
+
+            }
+            catch (Exception error)
+            {
+                error.GetBaseException();
+                return false;
+            }
+        }
 
         public List<Factura> obtenerFacturacion()
         {

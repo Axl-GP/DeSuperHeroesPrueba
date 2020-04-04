@@ -221,6 +221,8 @@ namespace DeSuperHeroesPrueba.Controllers
 
         //Obtener facturaciones
 
+
+
         [HttpGet]
         [Route("Obtener_facturacion/")]
 
