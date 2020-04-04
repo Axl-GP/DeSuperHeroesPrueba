@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DeSuperHeroesPrueba.Models;
+using DeSuperHeroesPrueba.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +29,17 @@ namespace DeSuperHeroesPrueba
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<desuperheroesvipDBcontext>(opciones => opciones.UseSqlServer(Configuration.GetConnectionString("db")));
+            services.AddTransient<ClienteCRUD, ClienteCRUD>();
+            services.AddTransient<borrarRelaciones, borrarRelaciones>();
+            services.AddTransient <ProductoCRUD, ProductoCRUD>();
+            services.AddTransient<ProveedorCRUD, ProveedorCRUD>();
+            services.AddTransient<entradas, entradas>();
+            services.AddTransient<facturaciones, facturaciones>();
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +53,8 @@ namespace DeSuperHeroesPrueba
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseAuthorization();
 
