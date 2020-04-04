@@ -57,6 +57,7 @@ namespace DeSuperHeroesPrueba.Services
         public decimal obtenerFacturacion(DateTime fecha, string filtro)
         {
             var resultado = _contexto.producto_cliente.Include(x => x.cliente).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.fechaFactura == fecha).ToList();
+            var factura = _contexto.factura.Include(x => x.cliente).Where(x => x.fecha == fecha);
 
             switch (filtro)
             {
@@ -67,7 +68,14 @@ namespace DeSuperHeroesPrueba.Services
                     return resultado.Count();
 
                 case "suma":
-                    return resultado.Sum(x => x.producto.precio);
+                    return factura.Sum(x => x.total);
+
+
+                case "maximo":
+                    return factura.Max(x=>x.total);
+
+                case "minimo":
+                    return factura.Min(x => x.total);
 
 
                 default:
