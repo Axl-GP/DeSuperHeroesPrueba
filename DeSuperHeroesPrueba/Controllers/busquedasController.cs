@@ -38,6 +38,15 @@ namespace DeSuperHeroesPrueba.Controllers
         }
 
         [HttpGet]
+        [Route("Obtener_productos_stock/{id}")]
+        public IActionResult getProductoStock(int id)
+        {
+            var resultado = _servicioEntradas.obtenerStock(id);
+            return Ok(resultado);
+        }
+
+
+        [HttpGet]
         [Route("Obtener_productos_nombre/{nombre}")]
         public IActionResult getProductos(string nombre)
         {
@@ -65,21 +74,12 @@ namespace DeSuperHeroesPrueba.Controllers
 
         }
         [HttpGet]
-        [Route("Obtener_clientes_categoria/{categoria}&&{filtro}")]
-        public IActionResult getClientesByCategoria(string categoria, string filtro)
+        [Route("Obtener_clientes_categoria/{categoria}")]
+        public IActionResult getClientesByCategoria(string categoria)
         {
             var resultado = _servicioCliente.ObtenerCategoria(categoria);
 
-            if (filtro.Equals("conteo"))
-            {
-              
-                return Ok(resultado.Count());
-
-            }
-            else if (filtro.Equals(""))
-            {
-                return Ok(resultado);
-            }
+            
             return Ok(resultado);
 
 
@@ -89,7 +89,7 @@ namespace DeSuperHeroesPrueba.Controllers
         }
 
         [HttpGet]
-        [Route("Obtener_conteo_categoria/{categoria}")]
+        [Route("Obtener_clientes_categoria_filtro/{categoria}")]
         public IActionResult getConteoByCategoria(string categoria)
         {
             var resultado = _servicioCliente.ObtenerCategoria(categoria);
@@ -161,7 +161,7 @@ namespace DeSuperHeroesPrueba.Controllers
             
         }
         [HttpGet]
-        [Route("Obtener_entrada_fecha/{fecha}&&{filtro}")]
+        [Route("Obtener_entrada_fecha_filtro/{fecha}&&{filtro}")]
 
         public IActionResult getEntradas(DateTime fecha, string filtro)
         {
@@ -185,7 +185,7 @@ namespace DeSuperHeroesPrueba.Controllers
         }
 
         [HttpGet]
-        [Route("Obtener_entrada_proveedor/{proveedor}&&{filtro}")]
+        [Route("Obtener_entrada_proveedor_filtro/{proveedor}&&{filtro}")]
 
         public IActionResult getEntradas(string proveedor, string filtro)
         {

@@ -123,6 +123,23 @@ namespace DeSuperHeroesPrueba.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("editar_productos")]
+        public IActionResult editProducto([FromBody]producto _producto)
+        {
+
+            var editar = _servicioProducto.editProducto(_producto);
+
+            if (editar)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpDelete]
         [Route("eliminar_productos/{productoid}")]
 

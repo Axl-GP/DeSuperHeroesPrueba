@@ -36,6 +36,7 @@ namespace DeSuperHeroesPrueba.Services
 
         }
 
+
         public List<stock> obtenerStock()
         {
             var resultado = _contexto.stock.ToList();
@@ -44,6 +45,13 @@ namespace DeSuperHeroesPrueba.Services
 
         }
 
+        public List<producto> obtenerStock(int id)
+        {
+            var resultado = _contexto.producto.Where(x=>x.Stockid==id).ToList();
+
+            return resultado;
+
+        }
         public Boolean AddEntrada(producto_proveedor importar)
         {
             try
@@ -82,14 +90,18 @@ namespace DeSuperHeroesPrueba.Services
 
             switch (filtro) {
                 case "promedio" :
-                    return resultado.Average(x => x.producto.precio);
+                    return (decimal)resultado.Average(x => x.cantidad);
 
                 case "conteo":
                     return resultado.Count();
 
                 case "suma":
-                    return resultado.Sum(x => x.producto.precio);
-                    
+                    decimal cantidad = resultado.Sum(x => x.cantidad);
+
+                    decimal total = cantidad * resultado.Sum(x => x.producto.precio);
+                    return cantidad;
+
+
 
                 default:
 
@@ -117,13 +129,17 @@ namespace DeSuperHeroesPrueba.Services
             switch (filtro)
             {
                 case "promedio":
-                    return resultado.Average(x => x.producto.precio);
+                    return (decimal)resultado.Average(x => x.cantidad);
 
                 case "conteo":
                     return resultado.Count();
 
                 case "suma":
-                    return resultado.Sum(x => x.producto.precio);
+                    decimal cantidad = resultado.Sum(x => x.cantidad);
+
+                    decimal total = cantidad * resultado.Sum(x => x.producto.precio);
+                    return cantidad;
+
 
 
                 default:
@@ -151,13 +167,16 @@ namespace DeSuperHeroesPrueba.Services
             switch (filtro)
             {
                 case "promedio":
-                    return resultado.Average(x => x.producto.precio);
+                    return (decimal)resultado.Average(x => x.cantidad);
 
                 case "conteo":
                     return resultado.Count();
 
                 case "suma":
-                    return resultado.Sum(x => x.producto.precio);
+                    decimal cantidad = resultado.Sum(x => x.cantidad);
+                   
+                    decimal total=cantidad*resultado.Sum(x => x.producto.precio);
+                    return cantidad;
 
 
                 default:

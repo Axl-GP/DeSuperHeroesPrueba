@@ -21,6 +21,8 @@ namespace DeSuperHeroesPrueba.Models
         public int existencia { get; set; }
       
         public DateTime ultimaFecha { get; set; }
+
+        public string img { get; set; }
         
         
          public class mapear
@@ -31,6 +33,7 @@ namespace DeSuperHeroesPrueba.Models
                 mapeo.Property(x => x.nombre).HasColumnName("tipoProducto");
                 mapeo.Property(x => x.existencia).HasColumnName("existencia");
                 mapeo.Property(x => x.ultimaFecha).HasColumnName("ultimaFecha");
+                mapeo.Property(x => x.img).HasColumnName("img");
                 mapeo.ToTable("stock");
             }
         }

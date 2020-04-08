@@ -51,6 +51,8 @@ namespace DeSuperHeroesPrueba.Services
                 }
 
             }
+
+
         public Boolean AddProducto(producto _producto)
         {
             try
@@ -63,6 +65,29 @@ namespace DeSuperHeroesPrueba.Services
             catch (Exception error)
             {
                 error.GetBaseException();
+                return false;
+            }
+        }
+
+        public Boolean editProducto(producto _producto)
+        {
+            try
+            {
+                var editar = _contexto.producto.Where(producto => producto.id == _producto.id).FirstOrDefault();
+                editar.nombre = _producto.nombre;
+                editar.precio = _producto.precio;
+                editar.Stockid = _producto.Stockid;
+                
+
+
+                _contexto.SaveChanges();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
                 return false;
             }
         }

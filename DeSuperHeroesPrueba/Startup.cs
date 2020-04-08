@@ -38,7 +38,7 @@ namespace DeSuperHeroesPrueba
             services.AddTransient<facturaciones, facturaciones>();
             services.AddCors(c =>
             {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
         }
 
@@ -54,7 +54,7 @@ namespace DeSuperHeroesPrueba
 
             app.UseRouting();
 
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors("AllowOrigin");
 
             app.UseAuthorization();
 

@@ -22,6 +22,7 @@ namespace DeSuperHeroesPrueba.Services
             {
                 _contexto.producto_cliente.Add(compra);
                 _contexto.SaveChanges();
+                
                 return true;
 
             }
@@ -62,10 +63,10 @@ namespace DeSuperHeroesPrueba.Services
             switch (filtro)
             {
                 case "promedio":
-                    return resultado.Average(x => x.producto.precio);
+                    return (decimal)factura.Average(x => x.cantidad);
 
                 case "conteo":
-                    return resultado.Count();
+                    return factura.Count();
 
                 case "suma":
                     return factura.Sum(x => x.total);
@@ -98,18 +99,24 @@ namespace DeSuperHeroesPrueba.Services
         public decimal obtenerFacturacion(string cliente, string filtro)
         {
             var resultado = _contexto.producto_cliente.Include(x => x.cliente).Include(y => y.producto).ThenInclude(y => y.Stock).Where(x => x.cliente.nombre == cliente).ToList();
+            var factura = _contexto.factura.Include(x => x.cliente).Where(x => x.cliente.nombre == cliente);
 
             switch (filtro)
             {
                 case "promedio":
-                    return resultado.Average(x => x.producto.precio);
+                    return (decimal)factura.Average(x => x.cantidad);
 
                 case "conteo":
-                    return resultado.Count();
+                    return factura.Count();
 
                 case "suma":
-                    return resultado.Sum(x => x.producto.precio);
+                    return factura.Sum(x => x.total);
 
+                case "maximo":
+                    return factura.Max(x => x.total);
+
+                case "minimo":
+                    return factura.Min(x => x.total);
 
                 default:
 
