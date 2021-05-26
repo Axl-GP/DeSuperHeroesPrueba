@@ -1,0 +1,4 @@
+C:\Users\wmlgu\source\repos\DeSuperHeroesPrueba\Infraestructure\bin\Debug\netstandard2.1\Domain.dll
+C:\Users\wmlgu\source\repos\DeSuperHeroesPrueba\Infraestructure\obj\Debug\netstandard2.1\Infraestructure.csprojAssemblyReference.cache
+C:\Users\wmlgu\source\repos\DeSuperHeroesPrueba\Infraestructure\obj\Debug\netstandard2.1\Infraestructure.AssemblyInfoInputs.cache
+C:\Users\wmlgu\source\repos\DeSuperHeroesPrueba\Infraestructure\obj\Debug\netstandard2.1\Infraestructure.AssemblyInfo.cs

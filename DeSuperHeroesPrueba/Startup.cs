@@ -2,8 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DeSuperHeroesPrueba.Models;
-using DeSuperHeroesPrueba.Services;
+using Domain.Contracts;
+using Domain.Entities;
+using Infraestructure;
+using Infraestructure.DTO_s.Bill;
+using Infraestructure.DTO_s.Bills;
+using Infraestructure.DTO_s.Clients;
+using Infraestructure.DTO_s.Entries;
+using Infraestructure.DTO_s.Products;
+using Infraestructure.DTO_s.Providers;
+using Infraestructure.DTO_s.Sells;
+using Infraestructure.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,13 +38,40 @@ namespace DeSuperHeroesPrueba
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<desuperheroesvipDBcontext>(opciones => opciones.UseSqlServer(Configuration.GetConnectionString("db")));
-            services.AddTransient<ClienteCRUD, ClienteCRUD>();
-            services.AddTransient<borrarRelaciones, borrarRelaciones>();
-            services.AddTransient <ProductoCRUD, ProductoCRUD>();
-            services.AddTransient<ProveedorCRUD, ProveedorCRUD>();
-            services.AddTransient<entradas, entradas>();
-            services.AddTransient<facturaciones, facturaciones>();
+
+            //DI for DbContext and repositories, i used singleton with unitOfWork because this instance will be used in every request,
+            //on the other hand, the repositories will be used only in their own controllers, not necessary in every request.
+            services.AddDbContext<ApplicationDbContext>(opciones => opciones.UseSqlServer(Configuration["db"]));
+            services.AddSingleton<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBillRepository, BillRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IEntriesRepository, EntriesRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProviderRepository, ProviderRepository>();
+            services.AddScoped<ISellsRepository, SellsRepository>();
+            services.AddScoped<IStockRepository, StockRepository>();
+
+            //DTO's mappers
+            services.AddAutoMapper(mapper =>
+            {
+                mapper.CreateMap<Bill, BillOTO>();
+                mapper.CreateMap<BillITO, Bill>().ReverseMap();
+
+                mapper.CreateMap<Client, ClientOTO>();
+                mapper.CreateMap<ClientITO, Client>().ReverseMap();
+
+                mapper.CreateMap<ProductProvider, EntryOTO>();
+                mapper.CreateMap<EntryITO, ProductProvider>().ReverseMap();
+
+                mapper.CreateMap<Product, ProductOTO>();
+                mapper.CreateMap<ProductITO, Product>().ReverseMap();
+
+                mapper.CreateMap<ProductClient, SellOTO>();
+                mapper.CreateMap<SellITO, ProductClient>().ReverseMap();
+
+                mapper.CreateMap<Provider, ProviderOTO>();
+                mapper.CreateMap<ProviderITO, Provider>().ReverseMap();
+            });
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
