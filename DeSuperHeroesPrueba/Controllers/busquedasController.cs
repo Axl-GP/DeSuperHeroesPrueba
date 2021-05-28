@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DeSuperHeroesPrueba.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +11,7 @@ namespace DeSuperHeroesPrueba.Controllers
     [ApiController]
     public class busquedasController : ControllerBase
     {
-
+        /*
         private readonly ClienteCRUD _servicioCliente;
         private readonly ProductoCRUD _servicioProducto;
         private readonly ProveedorCRUD _servicioProveedor;
@@ -290,7 +289,7 @@ namespace DeSuperHeroesPrueba.Controllers
         {
             var resultado = _servicioEntradas.obtenerStock();
             return Ok(resultado);
-        }
+        }*/
 
     }
 }

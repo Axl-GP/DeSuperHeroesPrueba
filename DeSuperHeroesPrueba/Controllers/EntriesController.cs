@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Domain.Contracts;
+using Domain.Entities;
+using Infraestructure.DTO_s.Entries;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,18 +15,33 @@ namespace DeSuperHeroesPrueba.Controllers
     [ApiController]
     public class EntriesController : ControllerBase
     {
-        [HttpPost]
-        [Route("agregar_entrada")]
-        public IActionResult addEntrada([FromBody] producto_proveedor _importar)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public EntriesController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            var resultado = _servicioEntrada.AddEntrada(_importar);
-            if (resultado)
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+        }
+        [HttpPost]
+        public async Task<ActionResult<EntryOTO>> AddEntry([FromBody] EntryITO entry)
+        {
+            try
             {
-                return Ok();
+                var dbEntryMap = _mapper.Map<ProductProvider>(entry);
+                await _unitOfWork.EntriesRepository.AddAsync(dbEntryMap);
+                await _unitOfWork.CompleteAsync();
+                var entryOTO = _mapper.Map<EntryOTO>(dbEntryMap);
+                return new CreatedAtRouteResult(new { id = dbEntryMap.ProductProviderId }, entryOTO);
             }
-            else
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.HelpLink);
                 return BadRequest();
+            }
+            finally
+            {
+                await _unitOfWork.DisposeAsync();
             }
         }
     }

@@ -11,6 +11,7 @@ namespace DeSuperHeroesPrueba.Controllers
     [ApiController]
     public class ProvidersController : ControllerBase
     {
+        /*
         [HttpGet]
         [Route("Obtener_proveedores")]
         public IActionResult getProveedores()
@@ -67,7 +68,7 @@ namespace DeSuperHeroesPrueba.Controllers
             {
                 return BadRequest();
             }
-        }
+        }*/
 
     }
 }

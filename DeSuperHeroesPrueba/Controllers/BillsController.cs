@@ -1,4 +1,9 @@
-﻿using Domain.Contracts;
+﻿using AutoMapper;
+using Domain.Contracts;
+using Domain.Entities;
+using Infraestructure.DTO_s.Bill;
+using Infraestructure.DTO_s.Bills;
+using Infraestructure.DTO_s.Clients;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,73 +19,99 @@ namespace DeSuperHeroesPrueba.Controllers
     {
 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-
-        public BillsController(IUnitOfWork unitOfWork)
+        public BillsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        //apartado de metodos para el manejo de clientes
+        //apartado de metodos para el manejo de Bills
         [HttpGet]
-        [Route("Obtener_clientes")]
-        public IActionResult getClientes()
-        {
-            return Ok(_unitOfWork.ClientRepository.GetAllAsync());
-        }
+        public async Task<ActionResult<IEnumerable<BillOTO>>> GetBills()=> Ok(_mapper.Map<IEnumerable<BillITO>>(await _unitOfWork.BillRepository.GetAllAsync()));
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ClientOTO>> GetBill(int id) => Ok(_mapper.Map<ClientOTO>(await _unitOfWork.ClientRepository.GetAsync(id)));
 
         [HttpPost]
-        [Route("agregar_clientes")]
-        public IActionResult AddCliente([FromBody] Client _cliente)
+        public async Task<ActionResult<BillOTO>> AddBill([FromBody] BillITO bill)
         {
             try
             {
-                var resultado = _servicioCliente.addCliente(_cliente);
-
-                if (resultado)
-                {
-                    return Ok();
-                }
+                var dbBillMap = _mapper.Map<Bill>(bill);
+                await _unitOfWork.BillRepository.AddAsync(dbBillMap);
+                await _unitOfWork.CompleteAsync();
+                var billOTO = _mapper.Map<BillOTO>(dbBillMap);
+                return new CreatedAtRouteResult(new { id = dbBillMap.BillId }, billOTO);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.HelpLink);
                 return BadRequest();
             }
-            return Ok();
+            finally
+            {
+                await _unitOfWork.DisposeAsync();
+            }
 
         }
 
-        [HttpPut]
-        [Route("editar_cliente")]
-        public IActionResult editCliente([FromBody] Cliente _cliente)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> EditBill(int id,[FromBody] Bill bill)
         {
 
-            var editar = _servicioCliente.editCliente(_cliente);
-
-            if (editar)
+            var dbBill = await _unitOfWork.BillRepository.GetAsync(id);
+            if (dbBill != null && bill != null)
             {
-                return Ok();
+                try
+                {
+                    var dbBillMap = _mapper.Map<Bill>(bill);
+                    dbBillMap.Quantity = bill.Quantity;
+                    dbBillMap.Total = bill.Total;
+                    dbBillMap.Date = bill.Date;
+                    await _unitOfWork.CompleteAsync();
+                    return NoContent();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+                finally
+                {
+                    await _unitOfWork.DisposeAsync();
+                }
             }
             else
             {
-                return BadRequest();
+                return NotFound();
             }
         }
 
-        [HttpDelete]
-        [Route("eliminar_cliente/{id}")]
-        public IActionResult deleteCliente(int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteBill(int id)
         {
 
-            var eliminar = _servicioCliente.DeleteCliente(id);
+            var dbBill = await _unitOfWork.BillRepository.GetAsync(id);
 
-            if (eliminar)
+            if (dbBill!=null)
             {
-                return Ok();
+                try
+                {
+                    _unitOfWork.BillRepository.Remove(dbBill);
+                    await _unitOfWork.CompleteAsync();
+                    return NoContent();
+                }catch(Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+                finally
+                {
+                    await _unitOfWork.DisposeAsync();
+                }
             }
             else
             {
-                return BadRequest();
+                return NotFound();
             }
         }
     }

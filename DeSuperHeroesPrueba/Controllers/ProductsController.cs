@@ -23,18 +23,15 @@ namespace DeSuperHeroesPrueba.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+        /*
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductOTO>>> GetProducts() => Ok(_mapper
-            .Map<IEnumerable<ProductOTO>>(await _unitOfWork.ProductRepository.GetAllAsync()));
+        public async Task<ActionResult<IEnumerable<ProductOTO>>> GetProducts() => Ok(_mapper.Map<IEnumerable<ProductOTO>>(await _unitOfWork.ProductRepository.GetAllAsync()));
 
         [HttpGet]
         [Route("{productId}")]
-        public async Task<ActionResult<ProductOTO>> GetProduct(int productId) => Ok(await _unitOfWork)
-        {
-            var resultado = _servicioProducto.ObtenerID(id);
-            return Ok(resultado);
-        }
+        public async Task<ActionResult<ProductOTO>> GetProduct(int productId) => Ok(await _unitOfWork.ProductRepository.GetAsync(productId));
+
 
         [HttpGet]
         [Route("Obtener_productos_stock/{id}")]
@@ -132,6 +129,6 @@ namespace DeSuperHeroesPrueba.Controllers
             {
                 await _unitOfWork.DisposeAsync();
             }
-        }
+        }*/
     }
 }
