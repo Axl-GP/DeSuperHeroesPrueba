@@ -23,31 +23,39 @@ namespace DeSuperHeroesPrueba.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        /*
+        
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductOTO>>> GetProducts() => Ok(_mapper.Map<IEnumerable<ProductOTO>>(await _unitOfWork.ProductRepository.GetAllAsync()));
+        public async Task<ActionResult<IEnumerable<ProductOTO>>> GetProducts() => Ok(_mapper
+            .Map<IEnumerable<ProductOTO>>(await _unitOfWork.ProductRepository.GetAllAsync()));
 
-        [HttpGet]
-        [Route("{productId}")]
-        public async Task<ActionResult<ProductOTO>> GetProduct(int productId) => Ok(await _unitOfWork.ProductRepository.GetAsync(productId));
+        [HttpGet("{productId}")]
+        public async Task<ActionResult<ProductOTO>> GetProduct(int productId) => Ok( _mapper
+            .Map<ProductOTO>(await _unitOfWork.ProductRepository.GetAsync(productId)));
+
+        [HttpGet("{stock/stockId}")]
+        public async Task<ActionResult<ProductOTO>> GetProductStock(int stockId) => Ok(_mapper
+            .Map<ProductOTO>(await _unitOfWork.ProductRepository.FirstOrDefaultAsync(x=>x.StockId == stockId)));
 
 
-        [HttpGet]
-        [Route("Obtener_productos_stock/{id}")]
-        public IActionResult getProductoStock(int id)
+        [HttpGet("custom-search/{name}")]
+        public async Task<ActionResult<ProductOTO>> GetProductsByName(string name)
         {
-            var resultado = _servicioEntradas.obtenerStock(id);
-            return Ok(resultado);
-        }
+            try
+            {
+                var mappedResponse = _mapper.Map<IEnumerable<ProductOTO>>(await _unitOfWork
+                    .ProductRepository.ToListAsync(x => x.Name == name));
 
+                if (mappedResponse != null)
+                    return Ok(mappedResponse);
+                else
+                    return NotFound();
 
-        [HttpGet]
-        [Route("Obtener_productos_nombre/{nombre}")]
-        public IActionResult getProductos(string nombre)
-        {
-            var resultado = _servicioProducto.ObtenerNombre(nombre);
-            return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -129,6 +137,6 @@ namespace DeSuperHeroesPrueba.Controllers
             {
                 await _unitOfWork.DisposeAsync();
             }
-        }*/
+        }
     }
 }

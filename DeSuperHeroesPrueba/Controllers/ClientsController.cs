@@ -25,6 +25,8 @@ namespace DeSuperHeroesPrueba.Controllers
         }
 
         //apartado de metodos para el manejo de clientes
+
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ClientOTO>>> GetClients() => Ok(_mapper
             .Map<IEnumerable<ClientOTO>>(await _unitOfWork.ClientRepository.GetAllAsync()));
@@ -34,7 +36,59 @@ namespace DeSuperHeroesPrueba.Controllers
         {
             return Ok(await _unitOfWork.ClientRepository.GetAsync(clientId));
         }
-        
+
+        [HttpGet("custom-search/name/{clientName}")]
+        public async Task<ActionResult<ClientOTO>> GetClientsByName(string clientName) 
+        { 
+            try
+            {
+                var mappedResponse = _mapper.Map<ClientOTO>(await _unitOfWork
+                    .ClientRepository.FirstOrDefaultAsync(x=>x.Name == clientName));
+ 
+                if (mappedResponse != null)
+                    return Ok(mappedResponse);
+                else
+                    return NotFound();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpGet("custom-search/category/{category}")]
+        public async Task<ActionResult<ClientOTO>> GetClientsByCategery(string category)
+        {
+            try
+            {
+                var mappedResponse = _mapper.Map<IEnumerable<ClientOTO>>(await _unitOfWork
+                    .ClientRepository.ToListAsync(x => x.Name == category));
+
+                if (mappedResponse != null)
+                    return Ok(mappedResponse);
+                else
+                    return NotFound();
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpGet("custom-search/category/count/{category}")]
+        public async Task<ActionResult<int>> GetCountByCategery(string category)
+        {
+            var mappedResponse = _mapper.Map<IEnumerable<ClientOTO>>(await _unitOfWork
+                .ClientRepository.ToListAsync(x => x.Name == category)).Count();
+
+                return Ok(mappedResponse);
+
+        }
+
         [HttpPost]
         public async Task<ActionResult<ClientOTO>> AddClient([FromBody] ClientITO client)
         {

@@ -67,11 +67,10 @@ namespace DeSuperHeroesPrueba.Controllers
             }
 
         }
+       
         [HttpGet("custom-search/{date}&&{filter}")]
         public async Task<ActionResult<decimal>> GetEntriesByDateAndFilter(DateTime date, string filter)=> await _unitOfWork
                     .EntriesRepository.GetEntriesByDateAndFilterAsync(date, filter);
-
-
 
         [HttpGet("custom-search/{providerName}")]
         public async Task<ActionResult<IEnumerable<EntryOTO>>> GetEntriesByProviderName(string providerName)
