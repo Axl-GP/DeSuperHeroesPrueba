@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Domain.Contracts;
+using Domain.Entities;
+using Infraestructure.DTO_s.Providers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,64 +15,108 @@ namespace DeSuperHeroesPrueba.Controllers
     [ApiController]
     public class ProvidersController : ControllerBase
     {
-        /*
-        [HttpGet]
-        [Route("Obtener_proveedores")]
-        public IActionResult getProveedores()
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
+        public ProvidersController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            var resultado = _servicioProveedor.Obtener();
-            return Ok(resultado);
+            this._unitOfWork = unitOfWork;
+            this._mapper = mapper;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProviderOTO>>> GetProviders() => Ok(_mapper
+            .Map<IEnumerable<ProviderOTO>>(await _unitOfWork.ProviderRepository.GetAllAsync()));
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProviderOTO>> GetProviderById(int id) => Ok(_mapper
+            .Map<IEnumerable<ProviderOTO>>(await _unitOfWork.ProviderRepository.GetAsync(id)));
 
+        [HttpGet("custom-search/{name}")]
+        public async Task<ActionResult<IEnumerable<ProviderOTO>>> GetProvidersByName(string name) => Ok(_mapper
+            .Map<IEnumerable<ProviderOTO>>(await _unitOfWork.ProviderRepository.ToListAsync(x => x.Name == name)));
+        
+        [HttpGet("custom-search/{email}")]
+        public async Task<ActionResult<IEnumerable<ProviderOTO>>> GetProvidersByEmail(string email) => Ok(_mapper
+            .Map<IEnumerable<ProviderOTO>>(await _unitOfWork.ProviderRepository.ToListAsync(x => x.Email == email)));
 
         [HttpPost]
-        [Route("agregar_proveedores")]
-        public IActionResult addProveedor([FromBody] proveedor proveedor)
+        public async Task<ActionResult<ProviderOTO>> AddProvider([FromBody] ProviderITO model)
         {
-            var resultado = _servicioProveedor.AddProveedor(proveedor);
-
-            if (resultado)
+            try
             {
-                return Ok();
+                var dbModelMap = _mapper.Map<Provider>(model);
+                await _unitOfWork.ProviderRepository.AddAsync(dbModelMap);
+                await _unitOfWork.CompleteAsync();
+                var outModelMap = _mapper.Map<ProviderOTO>(dbModelMap);
+                return new CreatedAtRouteResult(new { id = dbModelMap.Id }, outModelMap);
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
+            }
+            finally
+            {
+                await _unitOfWork.DisposeAsync();
             }
 
         }
 
-        [HttpPut]
-        [Route("editar_proveedores")]
-
-        public IActionResult editProveedores([FromBody] proveedor _proveedor)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> EditProvider(int id, [FromBody] ProviderITO model)
         {
-            var resultado = _servicioProveedor.editProveedor(_proveedor);
-            if (resultado)
+            try
             {
-                return Ok();
+                var dbIdItem = await _unitOfWork.ProviderRepository.GetAsync(id);
+                if (dbIdItem!=null)
+                {
+                    var dbModelMap = _mapper.Map<Provider>(model);
+                    dbIdItem.Name = dbModelMap.Name;
+                    dbIdItem.RNC = dbModelMap.RNC;
+                    dbIdItem.Email = dbModelMap.Email;
+                    dbIdItem.PhoneNumber = dbModelMap.PhoneNumber;
+                    await _unitOfWork.CompleteAsync();
+                    return NoContent();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
-            return BadRequest();
+            finally
+            {
+                await _unitOfWork.DisposeAsync();
+            }
         }
-        [HttpDelete]
-        [Route("eliminar_proveedores/{idProveedor}")]
-
-        public IActionResult deleteProveedores(int idProveedor)
+        
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProvider(int id)
         {
 
-            var resultado = _servicioProveedor.DeleteProveedor(idProveedor);
-
-            if (resultado)
+            try
             {
-                return Ok();
-            }
-            else
+                var dbIdItem = await _unitOfWork.ProviderRepository.GetAsync(id);
+                if (dbIdItem != null)
+                {
+                    _unitOfWork.ProviderRepository.Remove(dbIdItem);
+                    return NoContent();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
-        }*/
+            finally
+            {
+                await _unitOfWork.DisposeAsync();
+            }
+        }
 
     }
 }

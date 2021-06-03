@@ -2,13 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Infraestructure.Implementations
 {
-    public class Repository<T> where T:class
+    public class Repository<T>:IRepository<T> where T:class
     {
         private DbContext _context;
         public Repository(DbContext context)
@@ -39,5 +40,8 @@ namespace Infraestructure.Implementations
         public void Remove(T entity) => _context.Set<T>().Remove(entity);
 
         public void RemoveRange(IEnumerable<T> entities) => _context.Set<T>().RemoveRange(entities);
+
+        public async Task<IEnumerable<T>> ToListAsync(Expression<Func<T, bool>> predicate) => await _context.Set<T>()
+            .Where(predicate).ToListAsync();
     }
 }
