@@ -36,7 +36,7 @@ namespace DeSuperHeroesPrueba.Controllers
         public async Task<ActionResult<IEnumerable<ProviderOTO>>> GetProvidersByName(string name) => Ok(_mapper
             .Map<IEnumerable<ProviderOTO>>(await _unitOfWork.ProviderRepository.ToListAsync(x => x.Name == name)));
         
-        [HttpGet("custom-search/{email}")]
+        [HttpGet("custom-search/email/{email}")]
         public async Task<ActionResult<IEnumerable<ProviderOTO>>> GetProvidersByEmail(string email) => Ok(_mapper
             .Map<IEnumerable<ProviderOTO>>(await _unitOfWork.ProviderRepository.ToListAsync(x => x.Email == email)));
 
