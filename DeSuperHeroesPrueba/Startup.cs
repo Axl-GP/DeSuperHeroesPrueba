@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Domain.Contracts;
 using Domain.Entities;
@@ -12,7 +13,10 @@ using Infraestructure.DTO_s.Entries;
 using Infraestructure.DTO_s.Products;
 using Infraestructure.DTO_s.Providers;
 using Infraestructure.DTO_s.Sells;
+using Infraestructure.DTO_s.Stock;
+using Infraestructure.DTO_s.User;
 using Infraestructure.Implementations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -22,6 +26,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DeSuperHeroesPrueba
 {
@@ -38,6 +43,30 @@ namespace DeSuperHeroesPrueba
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //JWT Bearer configuration
+
+            var key = Encoding.ASCII.GetBytes(Configuration["jwt-key"]);
+
+            services.AddAuthentication(auth =>
+            {
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(jwt=> 
+            {
+
+                jwt.RequireHttpsMetadata = false;
+                jwt.SaveToken = true;
+                jwt.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+
+            });
 
             //DI for DbContext and repositories, i used singleton with unitOfWork because this instance will be used in every request,
             //on the other hand, the repositories will be used only in their own controllers, not necessary in every request.
@@ -71,6 +100,12 @@ namespace DeSuperHeroesPrueba
 
                 mapper.CreateMap<Provider, ProviderOTO>();
                 mapper.CreateMap<ProviderITO, Provider>().ReverseMap();
+
+                mapper.CreateMap<Stock, StockOTO>();
+
+                mapper.CreateMap<User, UserOTO>();
+                mapper.CreateMap<UserITO, User>().ReverseMap();
+
             });
             services.AddCors(c =>
             {
